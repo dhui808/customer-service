@@ -1,0 +1,156 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "\"Spring Boot REST API for Product Service\"",
+		"version": "1.0.0",
+		"title": "Spring Boot REST API",
+		"license": {
+			"name": "Apache License Version 2.0",
+			"url": "https://www.apache.org/licenses/LICENSE-2.0\""
+		}
+	},
+	"host": "localhost:8080",
+	"basePath": "/productservice",
+	"tags": [
+		{
+			"name": "product-controller",
+			"description": "Product Controller"
+		}
+	],
+	"paths": {
+		"/products": {
+			"get": {
+				"tags": [
+					"product-controller"
+				],
+				"summary": "listProducts",
+				"operationId": "listProductsUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Product"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/products/customer/{custId}": {
+			"get": {
+				"tags": [
+					"product-controller"
+				],
+				"summary": "listProductsByCustomerId",
+				"operationId": "listProductsByCustomerIdUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "custId",
+						"in": "path",
+						"description": "custId",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Product"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/products/{id}": {
+			"get": {
+				"tags": [
+					"product-controller"
+				],
+				"summary": "getProductById",
+				"operationId": "getProductByIdUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/Product"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"deprecated": false
+			}
+		}
+	},
+	"definitions": {
+		"Product": {
+			"type": "object",
+			"properties": {
+				"customerId": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"price": {
+					"type": "string"
+				}
+			},
+			"title": "Product"
+		}
+	}
+}
