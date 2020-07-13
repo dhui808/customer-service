@@ -14,7 +14,7 @@ import productservice.model.Product;
 import java.util.List;
 
 
-@FeignClient(name = "product-service" ,url = "http://localhost:8080/productservice")
+@FeignClient(name = "ps" ,url = "${feign.url}")
 public interface ProductClient {
 
     @GetMapping("/products")
