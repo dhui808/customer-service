@@ -5,7 +5,9 @@ import customerservice.feign.client.ProductClient;
 import customerservice.model.AddCustomerResponse;
 import customerservice.model.Customer;
 import customerservice.service.CustomerService;
+import productservice.client.ProductControllerApi;
 import productservice.model.Product;
+import productservice.ApiClient;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,7 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
-	@Autowired
-	private ProductClient productClient;
+	private ProductControllerApi productClient = new ApiClient().buildClient(ProductControllerApi.class);;
 
 	@Autowired
 	private CustomerService customerService;
@@ -35,7 +36,7 @@ public class CustomerController {
 		List<CustomerDto> dtos = new ArrayList<CustomerDto>(customers.size());
 		
 		for (Customer customer : customers) {
-			List<Product> products = productClient.listProductsByCustomerId(customer.getId());
+			List<Product> products = productClient.listProductsByCustomerIdUsingGET(customer.getId());
 			CustomerDto dto = new CustomerDto();
 			BeanUtils.copyProperties(customer, dto);
 			dto.setProducts(products);
@@ -49,7 +50,7 @@ public class CustomerController {
 	public CustomerDto getCustomerById(@PathVariable String id) {
 		Customer customer = customerService.listCustomers().stream().filter(cust -> cust.getId().equalsIgnoreCase(id))
 				.findFirst().get();
-		List<Product> products = productClient.listProductsByCustomerId(id);
+		List<Product> products = productClient.listProductsByCustomerIdUsingGET(id);
 		CustomerDto dto = new CustomerDto();
 		BeanUtils.copyProperties(customer, dto);
 		dto.setProducts(products);
